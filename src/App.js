@@ -1,24 +1,19 @@
 import React, { Component } from 'react';
-import { Connectors, Web3Provider } from 'web3-react'
 import IPFS from 'ipfs-mini';
 
-const ipfs = new IPFS({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
-const metaMask = new Connectors.MetaMaskConnector({ supportedNetworks: 1 })
+const ipfs = new IPFS({
+  host: 'ipfs.infura.io',
+  port: 5001,
+  protocol: 'https'
+});
 
 class App extends Component {
+  state = {
+    proposal: '',
+    content: ''
+  };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-        proposal: '',
-        content: ''
-    };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleChange(event) {
+  handleChange = event => {
     const target = event.target;
     const value = target.value;
     const name = target.name;
@@ -26,46 +21,45 @@ class App extends Component {
     this.setState({
       [name]: value
     });
-  }
+  };
 
-  handleSubmit(event) {
-    ipfs.add(this.state.content)
-        .then(hash => console.log(`https://ipfs.infura.io/ipfs/${hash}`))
-        .catch(console.log);
+  handleSubmit = event => {
+    ipfs
+      .add(this.state.content)
+      .then(hash => console.log(`https://ipfs.infura.io/ipfs/${hash}`))
+      .catch(console.log);
     event.preventDefault();
-  }
+  };
 
   render() {
     return (
-      <Web3Provider connectors={ metaMask }>
-        <div className="App">
-          <form onSubmit={this.handleSubmit}>
+      <div className="App">
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            content:
+            <input
+              name="content"
+              type="text"
+              value={this.state.content}
+              onChange={this.handleChange}
+            />
+          </label>
 
-            <label>
-              content:
-              <input
-                name="content"
-                type="text"
-                value={this.state.content}
-                onChange={this.handleChange} />
-            </label>
+          <br />
 
-            <br />
+          <label>
+            proposal:
+            <input
+              name="proposal"
+              type="text"
+              value={this.state.proposal}
+              onChange={this.handleChange}
+            />
+          </label>
 
-            <label>
-              proposal:
-              <input
-                name="proposal"
-                type="text"
-                value={this.state.proposal}
-                onChange={this.handleChange} />
-            </label>
-
-            <input type="submit" value="Submit" />
-
-          </form>
-        </div>
-      </Web3Provider>
+          <input type="submit" value="Submit" />
+        </form>
+      </div>
     );
   }
 }
