@@ -1,0 +1,3 @@
+[submodule "gov-cms"]
+	path = contracts/gov-cms
+	url = git@github.com:makerdao/gov-cms.git
