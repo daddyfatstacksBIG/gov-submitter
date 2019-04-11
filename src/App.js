@@ -42,16 +42,6 @@ const App = () => {
   return (
     <React.Fragment>
 
-      {context.connectorName !== "MetaMask" && (
-        <button onClick={() => context.setConnector("MetaMask")}>
-          Activate MetaMask
-        </button>
-      )}
-      {(context.active || context.error) && (
-        <button onClick={() => context.unsetConnector()}>
-          {context.active ? "Deactivate Metamask" : "Reset"}
-        </button>
-      )}
 
       <form onSubmit={handleSubmit}>
         <label>
@@ -77,6 +67,17 @@ const App = () => {
         </label>
 
         <br />
+
+        {context.connectorName !== "MetaMask" && (
+          <button onClick={() => context.setConnector("MetaMask")}>
+            Activate MetaMask
+          </button>
+        )}
+        {(context.active || context.error) && (
+          <button onClick={() => context.unsetConnector()}>
+            {context.active ? "Deactivate Metamask" : "Reset"}
+          </button>
+        )}
 
         <input type="submit" value="Submit" />
       </form>
