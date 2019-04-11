@@ -9,13 +9,15 @@
     "react-scripts": "2.1.8",
     "web3-react": "^3.0.1"
   },
+  "homepage": "./",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "testnet": "dapp testnet",
-    "deploy": "cd contracts/gov-cms && dapp update && dapp test && dapp create Cms"
+    "deploy:site": "react-scripts build && ipfs add -r build",
+    "deploy:contract": "cd contracts/gov-cms && dapp update && dapp test && dapp create Cms",
+    "testnet": "dapp testnet"
   },
   "eslintConfig": {
     "extends": "react-app"
