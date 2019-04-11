@@ -44,6 +44,19 @@ const App = () => {
 
 
       <form onSubmit={handleSubmit}>
+
+        <label>
+          proposal address
+          <input
+            name="proposal"
+            type="text"
+            value={proposal}
+            onChange={e => setProposal(e.target.value)}
+          />
+        </label>
+
+        <br />
+
         <label>
           content
           <textarea
@@ -51,18 +64,6 @@ const App = () => {
             type="text"
             value={content}
             onChange={e => setContent(e.target.value)}
-          />
-        </label>
-
-        <br />
-
-        <label>
-          proposal
-          <input
-            name="proposal"
-            type="text"
-            value={proposal}
-            onChange={e => setProposal(e.target.value)}
           />
         </label>
 
