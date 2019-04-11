@@ -19,16 +19,16 @@ const addToIpfs = async content => {
   } catch (err) {
     console.error(`failed to add content ${content} to ipfs`, err);
   }
-}
+};
 
 const App = () => {
-  const [proposal, setProposal] = useState('');
-  const [content, setContent] = useState('');
+  const [proposal, setProposal] = useState("");
+  const [content, setContent] = useState("");
 
   const handleSubmit = async event => {
     event.preventDefault();
     const hash = await addToIpfs(content);
-  }
+  };
 
   return (
     <div className="App">
@@ -39,7 +39,7 @@ const App = () => {
             name="content"
             type="text"
             value={content}
-			onChange={e => setContent(e.target.value)}
+            onChange={e => setContent(e.target.value)}
           />
         </label>
 
@@ -51,7 +51,7 @@ const App = () => {
             name="proposal"
             type="text"
             value={proposal}
-			onChange={e => setProposal(e.target.value)}
+            onChange={e => setProposal(e.target.value)}
           />
         </label>
 
@@ -61,6 +61,6 @@ const App = () => {
       </form>
     </div>
   );
-}
+};
 
 export default App;
