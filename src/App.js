@@ -24,14 +24,28 @@ const addToIpfs = async content => {
 const App = () => {
   const [proposal, setProposal] = useState("");
   const [content, setContent] = useState("");
+  const context = useWeb3Context();
 
   const handleSubmit = async event => {
     event.preventDefault();
     const hash = await addToIpfs(content);
+    console.log(context);
   };
 
   return (
-    <div className="App">
+    <React.Fragment>
+
+      {context.connectorName !== "MetaMask" && (
+        <button onClick={() => context.setConnector("MetaMask")}>
+          Activate MetaMask
+        </button>
+      )}
+      {(context.active || context.error) && (
+        <button onClick={() => context.unsetConnector()}>
+          {context.active ? "Deactivate Metamask" : "Reset"}
+        </button>
+      )}
+
       <form onSubmit={handleSubmit}>
         <label>
           content
@@ -59,7 +73,7 @@ const App = () => {
 
         <input type="submit" value="Submit" />
       </form>
-    </div>
+    </React.Fragment>
   );
 };
 
