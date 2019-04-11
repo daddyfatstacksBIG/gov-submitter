@@ -9,7 +9,7 @@ const MetaMask = new MetaMaskConnector();
 const connectors = { MetaMask };
 
 ReactDOM.render(
-  <Web3Provider connectors={connectors} libraryName="ethers.js">
+  <Web3Provider connectors={connectors} libraryName="web3.js">
     <div className="App">
       <App />
     </div>

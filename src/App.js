@@ -4,6 +4,9 @@ import IPFS from "ipfs-mini";
 import Cms from "./abis/Cms.json";
 import "./App.css";
 
+// kovan cms deployment
+const address = "0xe624250f4e860635b0201876526d1af19a5f5506";
+
 const ipfs = new IPFS({
   host: "ipfs.infura.io",
   port: 5001,
@@ -28,8 +31,12 @@ const App = () => {
 
   const handleSubmit = async event => {
     event.preventDefault();
+	const web3 = context.library;
+
     const hash = await addToIpfs(content);
-    console.log(context);
+    const cms = new web3.eth.Contract(Cms, address);
+	const tx = await cms.methods.register(proposal, hash).send({from: context.account}).then(console.log);
+	console.log(tx);
   };
 
   return (
