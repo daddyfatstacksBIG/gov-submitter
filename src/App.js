@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useWeb3Context } from "web3-react";
 import IPFS from "ipfs-mini";
-import Cms from "./abis/Cms.json";
+import cmsAbi from "./abis/Cms.json";
 import "./App.css";
 
 // kovan cms deployment
-const address = "0xe624250f4e860635b0201876526d1af19a5f5506";
+const cmsAddress = "0x320977912a52296eaab4fabca53712ba2eb0ae6e";
 
 const ipfs = new IPFS({
   host: "ipfs.infura.io",
@@ -34,15 +34,14 @@ const App = () => {
 	const web3 = context.library;
 
     const hash = await addToIpfs(content);
-    const cms = new web3.eth.Contract(Cms, address);
+    const cms = new web3.eth.Contract(cmsAbi, cmsAddress);
 	const tx = await cms.methods.register(proposal, hash).send({from: context.account}).then(console.log);
 	console.log(tx);
   };
 
   return (
     <React.Fragment>
-
-
+      CMS Address: <a href={'https://kovan.etherscan.io/address/' + cmsAddress}>{cmsAddress}</a>
       <form onSubmit={handleSubmit}>
 
         <label>
@@ -81,6 +80,7 @@ const App = () => {
         )}
 
         <input type="submit" value="Submit" />
+
       </form>
     </React.Fragment>
   );
