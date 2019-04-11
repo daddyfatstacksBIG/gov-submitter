@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { Connectors, Web3Provider } from 'web3-react'
 import IPFS from 'ipfs-mini';
 
 const ipfs = new IPFS({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
+const metaMask = new Connectors.MetaMaskConnector({ supportedNetworks: 1 })
 
 class App extends Component {
 
@@ -35,26 +37,35 @@ class App extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          content:
-          <input
-            name="content"
-            type="text"
-            value={this.state.content}
-            onChange={this.handleChange} />
-        </label>
-        <br />
-        <label>
-          proposal:
-          <input
-            name="proposal"
-            type="text"
-            value={this.state.proposal}
-            onChange={this.handleChange} />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
+      <Web3Provider connectors={ metaMask }>
+        <div className="App">
+          <form onSubmit={this.handleSubmit}>
+
+            <label>
+              content:
+              <input
+                name="content"
+                type="text"
+                value={this.state.content}
+                onChange={this.handleChange} />
+            </label>
+
+            <br />
+
+            <label>
+              proposal:
+              <input
+                name="proposal"
+                type="text"
+                value={this.state.proposal}
+                onChange={this.handleChange} />
+            </label>
+
+            <input type="submit" value="Submit" />
+
+          </form>
+        </div>
+      </Web3Provider>
     );
   }
 }
