@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import IPFS from 'ipfs-mini';
+
+const ipfs = new IPFS({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
 
 class App extends Component {
 
@@ -26,12 +27,15 @@ class App extends Component {
   }
 
   handleSubmit(event) {
+    ipfs.add(this.state.content)
+        .then(hash => console.log(`https://ipfs.infura.io/ipfs/${hash}`))
+        .catch(console.log);
     event.preventDefault();
   }
 
   render() {
     return (
-      <form>
+      <form onSubmit={this.handleSubmit}>
         <label>
           content:
           <input
@@ -49,6 +53,7 @@ class App extends Component {
             value={this.state.proposal}
             onChange={this.handleChange} />
         </label>
+        <input type="submit" value="Submit" />
       </form>
     );
   }
