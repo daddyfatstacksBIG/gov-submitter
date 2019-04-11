@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { useWeb3Context } from 'web3-react'
 import IPFS from 'ipfs-mini';
 import './App.css';
 
@@ -7,6 +8,17 @@ const ipfs = new IPFS({
   port: 5001,
   protocol: 'https'
 });
+
+let context = null;
+const Web3Setter = props => {
+  if (context === null) {
+    context = useWeb3Context();
+    context.setConnector('metaMask');
+  }
+  console.log(context);
+
+  return <div />;
+};
 
 class App extends Component {
   state = {
@@ -32,39 +44,47 @@ class App extends Component {
     } catch (err) {
       console.error(`failed to add content ${this.state.content} to ipfs`, err);
     }
+
   };
 
   render() {
     return (
-      <div className="App">
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            content
-            <textarea
-              name="content"
-              type="text"
-              value={this.state.content}
-              onChange={this.handleChange}
-            />
-          </label>
+	  <>
 
-          <br />
+	   <div hidden>
+	     <Web3Setter />
+	   </div>
 
-          <label>
-            proposal
-            <input
-              name="proposal"
-              type="text"
-              value={this.state.proposal}
-              onChange={this.handleChange}
-            />
-          </label>
+       <div className="App">
+         <form onSubmit={this.handleSubmit}>
+           <label>
+             content
+             <textarea
+               name="content"
+               type="text"
+               value={this.state.content}
+               onChange={this.handleChange}
+             />
+           </label>
 
-          <br />
+           <br />
 
-          <input type="submit" value="Submit" />
-        </form>
-      </div>
+           <label>
+             proposal
+             <input
+               name="proposal"
+               type="text"
+               value={this.state.proposal}
+               onChange={this.handleChange}
+             />
+           </label>
+
+           <br />
+
+           <input type="submit" value="Submit" />
+         </form>
+       </div>
+	  </>
     );
   }
 }
